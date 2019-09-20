@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/calvintoes/http-api-assignment/issues"
   },
-  "homepage": "https://github.com/calvintoes/http-api-assignment#readme"
+  "homepage": "https://github.com/calvintoes/http-api-assignment#readme",
+  "dependencies": {
+    "eslint-config-airbnb": "^18.0.1"
+  }
 }
