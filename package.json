@@ -1,0 +1,21 @@
+{
+  "name": "http-api-assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests complete\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calvintoes/http-api-assignment.git"
+  },
+  "author": "cto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/calvintoes/http-api-assignment/issues"
+  },
+  "homepage": "https://github.com/calvintoes/http-api-assignment#readme"
+}

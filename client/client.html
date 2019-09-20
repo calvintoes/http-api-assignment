@@ -7,6 +7,80 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
   <script type="text/babel">
 
+    const parseJSON = (xhr, content) => {
+      let type = document.querySelector('#type').value;
+      const obj = JSON.parse(xhr.response);
+      if (type === 'text/xml') {
+        let text = `<response><message>${obj.message}</message><id>${obj.id}</id></response>`
+        let parser = new DOMParser();
+        console.log(parser.parseFromString(text, 'text/xml'));
+      } else {
+        console.log(obj);
+      }
+      if (obj.message) {
+        content.innerHTML += `<p>${obj.message}</p>`;
+      }
+    };
+
+    const handleResponse = (xhr) => {
+      const content = document.querySelector('#content');
+      
+      switch (xhr.status) {
+        case 200:
+          content.innerHTML = '<b>Success</b>' 
+          break;
+        case 201:
+          content.innerHTML = '<b>Created</b>' 
+          break;
+        case 204:
+          content.innerHTML = '<b>Updated</b>' 
+          break;
+        case 400:
+          content.innerHTML = '<b>Bad Request</b>' 
+          break;
+        case 401:
+          content.innerHTML = '<b>Unauthorized</b>'
+          break;
+        case 403:
+          content.innerHTML = '<b>Forbidden</b>'
+          break;
+        case 500:
+          content.innerHTML = '<b>Internal Server Error</b>'
+          break;
+        case 501:
+          content.innerHTML = '<b>Not Implemented</b>'
+          break;
+        default:
+          content.innerHTML = '<b>Resource Not Found</b>' 
+          break;
+      }
+      parseJSON(xhr, content);
+    };
+
+    const sendRequest = (e) => {
+      let url = document.querySelector('#page').value;
+      let type = document.querySelector('#type').value;
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', url);
+      xhr.setRequestHeader('Content-type', type);
+      xhr.setRequestHeader('Accept', type);
+      xhr.onload = () => handleResponse(xhr);
+      let data = `{type: ${type}}`
+      xhr.send(data);
+      // Prevent html form to submit its own request
+      e.preventDefault;
+      return false;
+    };
+
+    const init = () => {
+      const nameSelect = document.querySelector('#send');
+      
+      const submit = (e) => sendRequest(e);
+      
+      nameSelect.addEventListener('click', submit);
+    };
+
+    window.onload = init;
   </script>
 </head>
 <body>
